@@ -1,0 +1,96 @@
+class Post:
+    def __init__(self, post_id, author, content):
+        self.post_id = post_id
+        self.author = author
+        self.content = content
+        self.likes = 0
+        self.comments = []
+
+    def add_like(self):
+        self.likes += 1
+
+    def add_comment(self, comment):
+        self.comments.append(comment)
+
+    def display_info(self):
+        print(f"Post ID: {self.post_id}")
+        print(f"Author: {self.author}")
+        print(f"Content: {self.content}")
+        print(f"Likes: {self.likes}")
+        print("Comments:")
+        for comment in self.comments:
+            print(f"- {comment}")
+
+class SocialMedia:
+    def __init__(self):
+        self.posts = {}
+
+    def create_post(self, post):
+        self.posts[post.post_id] = post
+        print(f"Post {post.post_id} created by {post.author}.")
+
+    def like_post(self, post_id):
+        post = self.posts.get(post_id)
+        if post:
+            post.add_like()
+            print(f"Post {post_id} liked.")
+        else:
+            print("Post not found.")
+
+    def comment_on_post(self, post_id, comment):
+        post = self.posts.get(post_id)
+        if post:
+            post.add_comment(comment)
+            print(f"Comment added to post {post_id}.")
+        else:
+            print("Post not found.")
+
+    def view_post(self, post_id):
+        post = self.posts.get(post_id)
+        if post:
+            post.display_info()
+        else:
+            print("Post not found.")
+
+def main():
+    social_media = SocialMedia()
+
+    while True:
+        print("\n===== Social Media Platform =====")
+        print("1. Create Post")
+        print("2. Like Post")
+        print("3. Comment on Post")
+        print("4. View Post")
+        print("5. Exit")
+
+        choice = input("Enter your choice (1-5): ")
+
+        if choice == "1":
+            post_id = input("Enter post ID: ")
+            author = input("Enter author name: ")
+            content = input("Enter post content: ")
+            post = Post(post_id, author, content)
+            social_media.create_post(post)
+
+        elif choice == "2":
+            post_id = input("Enter post ID to like: ")
+            social_media.like_post(post_id)
+
+        elif choice == "3":
+            post_id = input("Enter post ID to comment on: ")
+            comment = input("Enter your comment: ")
+            social_media.comment_on_post(post_id, comment)
+
+        elif choice == "4":
+            post_id = input("Enter post ID to view: ")
+            social_media.view_post(post_id)
+
+        elif choice == "5":
+            print("Thank you for using the Social Media Platform.")
+            break
+
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
